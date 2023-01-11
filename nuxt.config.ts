@@ -28,15 +28,26 @@ export default defineNuxtConfig({
     },
     modules: [
         'nuxt-icon',
-        '@nuxtjs/tailwindcss'
+        '@nuxtjs/tailwindcss',
+        [
+            '@pinia/nuxt', {
+                autoImports: [
+                    // automatically imports `defineStore`
+                    'defineStore', // import { defineStore } from 'pinia'
+                    // automatically imports `defineStore` as `definePiniaStore`
+                    ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+                ],
+            }
+        ]
+          
     ],
     vite: {
         css: {
           preprocessorOptions: {
-            scss: {
-              additionalData: '@use "@/assets/scss/_colors.scss" as *;'
+                scss: {
+                    additionalData: '@use "@/assets/scss/_colors.scss" as *;'
+                }
             }
-          }
         }
-      }
+    }
 })
