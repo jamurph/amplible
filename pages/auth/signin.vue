@@ -44,9 +44,7 @@
                     signinError.value = error;
                 } else {
                     //logged in!
-
-                    //TODO: listen to auth state change and redirect that way? in app.vue
-                    router.push('/dashboard')
+                    navigateTo('/dashboard')
                 }
             } catch (er) {
                 signinError.value = "Something went wrong connecting to the server. Please refresh and try again.";

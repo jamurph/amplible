@@ -15,7 +15,7 @@ definePageMeta({
             <NuxtLink to="/auth/signup">
                 <ButtonPrimary class="mx-3">Get Started <Icon name="fa6-solid:user-plus" class="ml-3"></Icon></ButtonPrimary>
             </NuxtLink>
-            <NuxtLink class="inline-block p-5 m-2 text-primary-dark20 hover:scale-105 transition-all duration-300" to="/about/howitworks">How it works <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
+            <NuxtLink class="inline-block p-5 m-2 text-primary-dark20 hover:text-primary transition-all duration-300" to="/about/howitworks">How it works <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
 
         </div>
   </div>

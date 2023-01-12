@@ -55,7 +55,7 @@
                     creationError.value = error;
                 } else {
                     //logged in!
-                    router.push('/dashboard')
+                    navigateTo('/auth/confirm')
                 }
             } catch (er) {
                 creationError.value = "Something went wrong connecting to the server. Please refresh and try again.";
