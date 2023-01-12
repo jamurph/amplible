@@ -1,10 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     runtimeConfig : {
-        openAISecret: "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", //access in SERVER directory only using => const runtimeConfig = useRuntimeConfig(); runtimeConfig.openAISecret
-        
-        
+        openAISecret: process.env.OPENAI_SECRET, //access in SERVER directory only using => const runtimeConfig = useRuntimeConfig(); runtimeConfig.openAISecret
+        public: {
+            supabaseURL: process.env.SUPABASE_URL,
+            supabasePublicKey: process.env.SUPABASE_KEY,
+        }
     },
+    css: ['~/assets/scss/_global.scss'],
     app: {
         head: {
             meta: [
@@ -23,11 +26,12 @@ export default defineNuxtConfig({
             ],
         },
         pageTransition : {
-            //TODO - Fade/scale transition
+            name:"page", appear:true, mode: "out-in"
         }
     },
     modules: [
         'nuxt-icon',
+        '@nuxtjs/supabase',
         '@nuxtjs/tailwindcss',
         [
             '@pinia/nuxt', {
@@ -49,5 +53,5 @@ export default defineNuxtConfig({
                 }
             }
         }
-    }
+    },
 })
