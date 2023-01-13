@@ -1,22 +1,3 @@
-<template>
-    <div>
-        <NavNavbar>
-            <template #logo><NuxtLink class="mx-5 p-3 hover:scale-150 transition-all" to="/"><NavLogo /></NuxtLink></template>
-            <template #desktop>
-                <NuxtLink class="mx-5 p-3 hover:scale-150 transition-all" to="/about/pricing">Pricing</NuxtLink>
-                <NuxtLink class="mx-5 p-3" to="/auth/signin">Sign In</NuxtLink>
-                <NuxtLink class="mx-5 p-3 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/auth/signup">Sign Up <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
-            </template>
-            <template #mobile>
-                <NuxtLink class="w-fit p-5 m-2" to="/about/pricing">Pricing</NuxtLink>
-                <NuxtLink class="w-fit p-5 m-2" to="/auth/signin">Sign In</NuxtLink>
-                <NuxtLink class="w-fit p-5 m-2 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/auth/signup">Sign Up <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
-            </template>
-        </NavNavbar>
-        <slot></slot>
-    </div>
-</template>
-
 <script setup>
     //put in metadata
     const route = useRoute()
@@ -37,4 +18,42 @@
             { name: 'twitter:image:alt', content: `Amplible Logo` },
         ]
     })
+
+    const user = useSupabaseUser()
+    const isLoggedIn = ref(false)
+
+    onMounted(() => {
+        watchEffect(()=> {
+            isLoggedIn.value = Boolean(user.value)
+        })
+    })
+
 </script>
+<template>
+    <div>
+        <NavNavbar>
+            <template #logo><NuxtLink class="mx-5" to="/"><NavLogo /></NuxtLink></template>
+            <template v-if="!isLoggedIn" #desktop>
+                <NuxtLink class="mx-5 p-3" to="/about/pricing">Pricing</NuxtLink>
+                <NuxtLink class="mx-5 p-3" to="/auth/signin">Sign In</NuxtLink>
+                <NuxtLink class="mx-5 p-3 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/auth/signup">Sign Up <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
+            </template>
+            <template v-if="isLoggedIn" #desktop>
+                <NuxtLink class="mx-5 p-3 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/dashboard">Dashboard</NuxtLink>
+                <NuxtLink class="mx-5 p-3" to="/settings">Settings</NuxtLink>
+                <NuxtLink class="mx-5 p-3" to="/auth/logout">Logout</NuxtLink>
+            </template>
+            <template v-if="!isLoggedIn"  #mobile>
+                <NuxtLink class="w-fit p-5 m-2" to="/about/pricing">Pricing</NuxtLink>
+                <NuxtLink class="w-fit p-5 m-2" to="/auth/signin">Sign In</NuxtLink>
+                <NuxtLink class="w-fit p-5 m-2 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/auth/signup">Sign Up <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
+            </template>
+            <template v-if="isLoggedIn" #mobile>
+                <NuxtLink class="mx-5 p-3" to="/dashboard">Dashboard</NuxtLink>
+                <NuxtLink class="mx-5 p-3" to="/settings">Settings</NuxtLink>
+                <NuxtLink class="mx-5 p-3" to="/auth/logout">Logout</NuxtLink>
+            </template>
+        </NavNavbar>
+        <slot></slot>
+    </div>
+</template>

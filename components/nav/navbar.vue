@@ -36,7 +36,6 @@
     })
 
     function toggleMenu(){
-        console.log("toggled?")
         menuopen.value = !menuopen.value
     }
 </script>

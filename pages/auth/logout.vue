@@ -1,5 +1,7 @@
 <script setup>
-    
+    definePageMeta({
+        pageTransition: false
+    })
 
     const user = useSupabaseUser()
     const client = useSupabaseAuthClient()
@@ -7,20 +9,22 @@
 
     /* must run client-side. */
     onBeforeMount( async () => {
-        if (user.value){
+
+        watchEffect(async ()=>{
+            if(!user.value?.id){
+                await navigateTo('/')
+            }
+        })
+
+        if (user.value?.id){
             const {logoutError} = await client.auth.signOut()
             if(logoutError){
                 error.value = logoutError
             }
-            else {
-                await navigateTo('/')
-            }
-        } else {
-            //no user
-            await navigateTo('/')
         }
     } )
 
+    
 
 </script>
 

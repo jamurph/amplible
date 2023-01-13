@@ -1,11 +1,11 @@
 <script setup>
     definePageMeta({
-        middleware: 'auth'
+        middleware: 'confirmed'
     })
 
 
     const user = useSupabaseUser()
-
+   
     
 </script>
 
