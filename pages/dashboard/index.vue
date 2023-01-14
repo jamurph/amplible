@@ -36,8 +36,7 @@ import { storeToRefs } from 'pinia';
                 <UserAiAcknowledgement />
             </template>
             <template v-else-if="!is_onboarded">
-                Onboard time
-                <ButtonPrimary @click="acknowledged_ai = false">back to acknowledge</ButtonPrimary>
+                <UserOnboarding />
             </template>
             <template v-else>
                 <h1>Welcome, {{ user.email }}</h1>

@@ -91,7 +91,7 @@
             }"
           />
           <small v-if="v$.password.$error" class="text-sm mt-1 text-red-400 block">{{ v$.password.$errors[0].$message }}</small>
-          <NuxtLink to="/auth/forgotpassword" class="text-sm mt-2 block">Forgot Password?</NuxtLink>
+          <NuxtLink to="/auth/forgotpassword" class="text-sm mt-2 inline-block">Forgot Password?</NuxtLink>
 
         </label>
         <ButtonPrimary class="mx-auto block mt-16" :disabled="isLoading"

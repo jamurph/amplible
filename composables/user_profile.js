@@ -9,6 +9,9 @@ export const useUserProfileStore = defineStore('user_profile', () => {
     const experience = ref()
     const skills = ref()
 
+    const initialized = ref(false)
+    const updating = ref(false)
+
     const user = useSupabaseUser()
     const supabase = useSupabaseClient()
 
@@ -44,7 +47,8 @@ export const useUserProfileStore = defineStore('user_profile', () => {
             } else {
                 throw new Error('Could not get user profile data. Please refresh and try again.') 
             }
-        
+            
+            initialized.value = true
         }
 
 
@@ -57,6 +61,7 @@ export const useUserProfileStore = defineStore('user_profile', () => {
         await getUserProfile()
         //watch for changes to state, and update via API
         watch([acknowledged_ai,is_onboarded,objective,education,experience,skills], async () => {
+            updating.value = true
             const {error} = await supabase.from('user_profiles').update(
                 {
                     acknowledged_ai: acknowledged_ai.value,
@@ -69,11 +74,12 @@ export const useUserProfileStore = defineStore('user_profile', () => {
             if(error){
                 throw new Error('Could not retrieve user profile data. Please refresh and try again.')
             }
+            updating.value = false
         })
     });
     
     
 
 
-    return {id, created_at, acknowledged_ai, is_onboarded, objective, education, experience, skills}
+    return {id, created_at, acknowledged_ai, is_onboarded, objective, education, experience, skills, initialized, updating}
 })
