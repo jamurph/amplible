@@ -30,7 +30,7 @@
 
 </script>
 <template>
-    <div>
+    <div class="min-h-screen" id="amplible-main">
         <NavNavbar>
             <template #logo><NuxtLink class="mx-5" to="/"><NavLogo /></NuxtLink></template>
             <template v-if="!isLoggedIn" #desktop>
@@ -39,7 +39,7 @@
                 <NuxtLink class="mx-5 p-3 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/auth/signup">Sign Up <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
             </template>
             <template v-if="isLoggedIn" #desktop>
-                <NuxtLink class="mx-5 p-3 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/dashboard">Dashboard</NuxtLink>
+                <NuxtLink class="mx-5 p-3" to="/dashboard">Dashboard</NuxtLink>
                 <NuxtLink class="mx-5 p-3" to="/settings">Settings</NuxtLink>
                 <NuxtLink class="mx-5 p-3" to="/auth/logout">Logout</NuxtLink>
             </template>
@@ -57,3 +57,8 @@
         <slot></slot>
     </div>
 </template>
+<style>
+    #amplible-main {
+        background: radial-gradient(circle at 50% 100%, #292e3d, #252a3a, #212737, #1d2334, #1a2030, #171d2d, #141a2a, #111727);
+    }
+</style>

@@ -1,7 +1,7 @@
 <template>
-    <nav class="bg-dark w-full relative z-50">
-        <div class="w-full bg-dark z-10">
-            <div class="container bg-dark flex justify-between items-center mx-auto p-3 ">
+    <nav class="w-full relative z-50">
+        <div class="w-full z-10">
+            <div class="container flex justify-between items-center mx-auto p-3 ">
                 <div class="z-10">
                     <slot name="logo"></slot>
                 </div>
@@ -49,6 +49,6 @@
     .v-enter-from,
     .v-leave-to {
         opacity: 0;
-        transform: translateY(-100%);
+        transform: translateX(100%);
     }
 </style>

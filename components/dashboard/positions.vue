@@ -48,8 +48,10 @@
             </div>
         </template>
         <div class="mt-14">
-            <NuxtLink to="/position/new" class="block bg-primary w-72 max-w-full text-center p-5 text-xl rounded-2xl mx-auto hover:scale-105 transition-all duration-300 hover:cursor-pointer">
-                Add New Position <Icon name="fa6-solid:plus"></Icon>
+            <NuxtLink to="/position/new">
+                <ButtonPrimary class="block w-72 max-w-full py-5 text-xl rounded-2xl mx-auto">
+                    Add New Position <Icon name="fa6-solid:plus"></Icon>
+                </ButtonPrimary>
             </NuxtLink>
         </div>
     </div>
