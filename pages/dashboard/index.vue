@@ -43,7 +43,8 @@ import { storeToRefs } from 'pinia';
                     <h1 class="text-4xl text-center mb-8">Dashboard</h1>
                     <hr class="border-dark-light20"/>
                     <DashboardPositions/>
-                    <hr class="border-dark-light20 mt-16"/>
+                    <DashboardArchivedPositions />
+                    <hr class="border-dark-light20"/>
                 </div>
             </template>
         </template>

@@ -60,11 +60,11 @@
 </script>
 
 <template>
-    
-    <div class="bg-dark p-8 py-16 md:max-w-lg md:mx-auto mx-3 rounded-3xl border border-light-dark20 mt-20 shadow-2xl mb-32" >
-      <h2 class="text-3xl text-center mb-2">Welcome Back!</h2>
-      <form @submit.prevent="signIn()">
-        <label class="block mb-8 mt-8" for="email">
+    <div class="pb-32">
+      <div class="bg-dark p-8 py-16 md:max-w-lg md:mx-auto mx-3 rounded-3xl border border-light-dark20 mt-20 shadow-2xl" >
+        <h2 class="text-3xl text-center mb-2">Welcome Back!</h2>
+        <form @submit.prevent="signIn()">
+          <label class="block mb-8 mt-8" for="email">
           Email:
           <input
             class="rounded mt-1 p-2 w-full text-dark bg-light border-2"
@@ -73,7 +73,7 @@
             placeholder="Enter your email"
             v-model="formData.email"
             :class="{
-                'border-red-400 border-2': v$.email.$error,
+              'border-red-400 border-2': v$.email.$error,
             }"
           />
           <small v-if="v$.email.$error" class="text-sm mt-1 text-red-400 block">{{ v$.email.$errors[0].$message }}</small>
@@ -81,29 +81,30 @@
         <label class="block mb-8" for="password">
           Password:
           <input
-            placeholder="Enter your password"
-            class="rounded mt-1 p-2 w-full text-dark bg-light border-2"
-            type="password"
-            id="password"
-            v-model="formData.password"
-            :class="{
-                'border-red-400 border-2': v$.password.$error,
-            }"
+          placeholder="Enter your password"
+          class="rounded mt-1 p-2 w-full text-dark bg-light border-2"
+          type="password"
+          id="password"
+          v-model="formData.password"
+          :class="{
+            'border-red-400 border-2': v$.password.$error,
+          }"
           />
           <small v-if="v$.password.$error" class="text-sm mt-1 text-red-400 block">{{ v$.password.$errors[0].$message }}</small>
           <NuxtLink to="/auth/forgotpassword" class="text-sm mt-2 inline-block">Forgot Password?</NuxtLink>
-
+          
         </label>
         <ButtonPrimary class="mx-auto block mt-16" :disabled="isLoading"
-          type="submit"
+        type="submit"
         >
-          {{ isLoading ? 'Loading...' : 'Submit'}}
-        </ButtonPrimary>
-        <small v-if="signinError" class="text-sm mt-2 text-center text-red-400 block">{{ signinError }}</small>
-        <p class="text-center mt-8">
-            Need an account?
-            <NuxtLink to="/auth/signup" class="inline-block text-primary-dark20 hover:text-primary transition-all duration-300"> Create an Account <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
-        </p>
-      </form>
+        {{ isLoading ? 'Loading...' : 'Submit'}}
+      </ButtonPrimary>
+      <small v-if="signinError" class="text-sm mt-2 text-center text-red-400 block">{{ signinError }}</small>
+      <p class="text-center mt-8">
+        Need an account?
+        <NuxtLink to="/auth/signup" class="inline-block text-primary-dark20 hover:text-primary transition-all duration-300"> Create an Account <Icon name="fa6-solid:arrow-right"></Icon></NuxtLink>
+      </p>
+    </form>
     </div>
-  </template>
+  </div>
+</template>
