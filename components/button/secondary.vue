@@ -4,7 +4,7 @@
 
 <style scoped lang="scss">
 .secondary-btn {
-    background: linear-gradient(45deg, $secondary, $secondary-dark10, $secondary);
+    background: linear-gradient(45deg, $secondary, $secondary-dark20, $secondary);
     background-repeat: repeat;
     background-size: 200%;
 

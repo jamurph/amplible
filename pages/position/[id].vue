@@ -2,6 +2,7 @@
 
     const user = useSupabaseUser()
     const supabase = useSupabaseClient()
+
     const initializing = ref(true)
     const error = ref(false)
     const position = ref({})
@@ -56,6 +57,10 @@
                 <LinkDefault @click="toggleArchived" class="inline-block m-3 text-sm">{{ archiveLink }}</LinkDefault>
             </div>
             <hr class="border-dark-light20"/>
+            <div class="mt-8">
+                <h2 class="text-3xl">Start New Prep:</h2>
+                <PrepPositionPreptypes :position_id="route.params.id"/>
+            </div>
         </div>
     </div>
 </template>
