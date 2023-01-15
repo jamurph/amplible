@@ -40,7 +40,7 @@ import { storeToRefs } from 'pinia';
             </template>
             <template v-else>
                 <div class="container p-4 mx-auto">
-                <h1 class="text-4xl text-center mb-8">Dashboard</h1>
+                    <h1 class="text-4xl text-center mb-8">Dashboard</h1>
                     <hr class="border-dark-light20"/>
                     <DashboardPositions/>
                     <hr class="border-dark-light20 mt-16"/>

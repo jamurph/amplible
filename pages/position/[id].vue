@@ -23,6 +23,12 @@ const user = useSupabaseUser()
 <template>
     <LoadingSpinner v-if="initializing"/>
     <div v-else>
-        {{ position.company_name }}
+        <div class="container p-4 mx-auto">
+            <h2 class="text-4xl text-center mb-2">{{ position.title }}</h2>
+            <small class="text-sm text-center block">at</small>
+            <h1 class="text-4xl text-center mb-8">{{ position.company_name }}</h1>
+            <hr class="border-dark-light20"/>
+            <LinkDefault>Edit Details</LinkDefault>
+        </div>
     </div>
 </template>
