@@ -47,9 +47,9 @@
                 </div>
             </div>
         </template>
-        <div class="mt-14">
+        <div class="mt-14 text-center">
             <NuxtLink to="/position/new">
-                <ButtonPrimary class="block w-72 max-w-full py-5 text-xl rounded-2xl mx-auto">
+                <ButtonPrimary class="inline-block w-72 max-w-full py-5 text-xl rounded-2xl mx-auto">
                     Add New Position <Icon name="fa6-solid:plus"></Icon>
                 </ButtonPrimary>
             </NuxtLink>

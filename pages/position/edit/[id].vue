@@ -133,11 +133,14 @@
     }
 </script>
 <template>
-    <div class="pb-32">
+    <div class="pb-32 container mx-auto">
         <h2 class="text-4xl text-center mb-2">Editing Position</h2>
         <LoadingSpinner v-if="initializing" />
         <form v-else @submit.prevent="submitForm">
-            <div class="bg-dark-light10 p-8 py-16 md:max-w-4xl md:mx-auto mx-3 rounded-3xl border border-light-dark20 mt-20 shadow-2xl mb-16" >
+            <div class="md:max-w-4xl md:mx-auto mx-3 mt-16">
+                <LinkDefault :to="`/position/${position.id}`" ><Icon name="fa6-solid:arrow-left"></Icon> Cancel</LinkDefault>
+            </div>
+            <div class="bg-dark-light10 p-8 py-16 md:max-w-4xl md:mx-auto mx-3 rounded-3xl border border-light-dark20 mt-8 shadow-2xl mb-16" >
                 <h2 class="text-2xl text-center mb-2">Position Details</h2>
                 <p class="text-lg">Enter the details for the company and position you are applying for. You can often copy this straight from the job posting.</p>
                 <p class="text-lg my-3">For best results, make sure to remove any irrelevant information or fluff.</p>

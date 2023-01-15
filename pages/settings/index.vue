@@ -5,5 +5,7 @@
 </script>
 
 <template>
-    <UserSettings />
+    <div class="pb-32">
+        <UserSettings />
+    </div>
 </template>

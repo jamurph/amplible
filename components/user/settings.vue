@@ -73,7 +73,7 @@
     }
 </script>
 <template>
-    <div class="bg-dark p-8 py-16 md:max-w-4xl md:mx-auto mx-3 rounded-3xl border border-light-dark20 mt-20 shadow-2xl mb-16" >
+    <div class="bg-dark p-8 py-16 md:max-w-4xl md:mx-auto mx-3 rounded-3xl border border-light-dark20 mt-20 shadow-2xl" >
       <h2 class="text-3xl text-center mb-2">Personal Defaults</h2>
       <LoadingSpinner v-if="!initialized" />
       <form v-else @submit.prevent="submitForm">
@@ -137,11 +137,11 @@
           ></textarea>
           <small v-if="v$.skills.$error" class="text-sm mt-1 text-red-400 block">{{ v$.skills.$errors[0].$message }}</small>
         </label>
-        <ButtonPlain class="mx-auto block mt-16" :disabled="loadingOrUpdating"
+        <ButtonDefault class="mx-auto block mt-16" :disabled="loadingOrUpdating"
           type="submit"
         >
           {{ loadingOrUpdating ? 'Loading...' : 'Save Defaults'}}
-        </ButtonPlain>
+      </ButtonDefault>
           <small v-if="submittedSuccessfully" class="text-sm mt-1 text-emerald-400 block text-center">Changes Saved!</small>
       </form>
     </div>
