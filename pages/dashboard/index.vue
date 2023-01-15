@@ -39,7 +39,12 @@ import { storeToRefs } from 'pinia';
                 <UserOnboarding />
             </template>
             <template v-else>
-                <h1>Welcome, {{ user.email }}</h1>
+                <div class="container p-4 mx-auto">
+                <h1 class="text-4xl text-center mb-8">Dashboard</h1>
+                    <hr class="border-dark-light20"/>
+                    <DashboardPositions/>
+                    <hr class="border-dark-light20 mt-16"/>
+                </div>
             </template>
         </template>
 

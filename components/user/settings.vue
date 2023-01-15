@@ -17,16 +17,16 @@
     const rules = computed(() => {
         return {
             objective : {
-                maxLength : helpers.withMessage('Sorry - this Objective breaks the maximum length requirement.', maxLength(100)) //500
+                maxLength : helpers.withMessage('Too long!', maxLength(500)) //500
             },
             education : {
-                maxLength : helpers.withMessage('Sorry - this Objective breaks the maximum length requirement.', maxLength(100)) //1000
+                maxLength : helpers.withMessage('Too long!', maxLength(1000)) //1000
             },
             experience : {
-                maxLength : helpers.withMessage('Sorry - this Objective breaks the maximum length requirement.', maxLength(100)) //3000
+                maxLength : helpers.withMessage('Too long!', maxLength(3000)) //3000
             },
             skills : {
-                maxLength : helpers.withMessage('Sorry - this Objective breaks the maximum length requirement.', maxLength(100)) //1000
+                maxLength : helpers.withMessage('Too long!', maxLength(1000)) //1000
             },
         }
     })
@@ -84,7 +84,7 @@
             name="objective"
             placeholder="What's your professional objective?"
             v-model="formData.objective"
-            maxlength="100"
+            maxlength="500"
             rows="2"
             :class="{
                 'border-red-400 border-2': v$.objective.$error,
@@ -96,10 +96,10 @@
           Education:
           <textarea
             class="rounded mt-1 p-2 w-full text-dark bg-light border-2"
-            name="objective"
+            name="education"
             placeholder="Describe your education."
             v-model="formData.education"
-            maxlength="100"
+            maxlength="1000"
             rows="3"
             :class="{
                 'border-red-400 border-2': v$.education.$error,
@@ -114,7 +114,7 @@
             name="experience"
             placeholder="What relevant experience do you have?"
             v-model="formData.experience"
-            maxlength="100"
+            maxlength="3000"
             rows="6"
             :class="{
                 'border-red-400 border-2': v$.experience.$error,
@@ -129,7 +129,7 @@
             name="skills"
             placeholder="List your relevant skills."
             v-model="formData.skills"
-            maxlength="100"
+            maxlength="1000"
             rows="5"
             :class="{
                 'border-red-400 border-2': v$.skills.$error,
@@ -137,11 +137,11 @@
           ></textarea>
           <small v-if="v$.skills.$error" class="text-sm mt-1 text-red-400 block">{{ v$.skills.$errors[0].$message }}</small>
         </label>
-        <ButtonPrimary class="mx-auto block mt-16" :disabled="loadingOrUpdating"
+        <ButtonPlain class="mx-auto block mt-16" :disabled="loadingOrUpdating"
           type="submit"
         >
           {{ loadingOrUpdating ? 'Loading...' : 'Save Defaults'}}
-        </ButtonPrimary>
+        </ButtonPlain>
           <small v-if="submittedSuccessfully" class="text-sm mt-1 text-emerald-400 block text-center">Changes Saved!</small>
       </form>
     </div>
