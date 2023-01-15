@@ -5,8 +5,39 @@
 
     const userProfile = useUserProfileStore()
     const supabase = useSupabaseClient()
-    const {initialized} = storeToRefs(userProfile)
+    const {initialized: userInitialized} = storeToRefs(userProfile)
+    const route = useRoute()
+
+    const initializing = ref(true)
+    const position = ref({})
+    
     const supabaseError = ref('')
+
+    watchEffect(async ()=> {
+        if(userInitialized.value){
+            try{
+                let response = await supabase.from('positions').select('*').eq('user_id', userProfile.id).eq('id', route.params.id).limit(1)
+                position.value = response.data[0]
+                initializing.value = false
+            } catch (er){
+                supabaseError.value = er
+            }
+        }
+    })
+
+    watchEffect(()=> {
+        if(!initializing.value){
+            formData.companyName = position.value.company_name
+            formData.companyDescription = position.value.company_description
+            formData.positionTitle = position.value.title
+            formData.positionDescription = position.value.description
+            formData.positionRequirements = position.value.requirements
+            formData.objective = position.value.objective
+            formData.education = position.value.education
+            formData.experience = position.value.experience
+            formData.skills = position.value.skills
+        }
+    })
 
     const done = ref(false)
     watchEffect(async ()=>{
@@ -64,20 +95,10 @@
         }
     })
 
-    const isLoading = ref(false)
-
+    
     const v$ = useVuelidate(rules, formData)
-
-    watchEffect(()=> {
-        if(initialized){
-            formData.objective = userProfile.objective
-            formData.education = userProfile.education
-            formData.experience = userProfile.experience
-            formData.skills = userProfile.skills
-        }
-    })
-
-
+    
+    const isLoading = ref(false)
     async function submitForm(){
         isLoading.value = true
 
@@ -85,8 +106,7 @@
         if(!v$.value.$error){
 
             try{
-                const {error} = await supabase.from('positions').insert({
-                    user_id: userProfile.id,
+                const {error} = await supabase.from('positions').update({
                     company_name: formData.companyName,
                     company_description: formData.companyDescription,
                     title: formData.positionTitle,
@@ -96,7 +116,7 @@
                     education: formData.education,
                     experience: formData.experience,
                     skills: formData.skills,
-                })
+                }).eq('id', position.value.id)
 
                 if(error){
                     supabaseError.value = error
@@ -114,8 +134,8 @@
 </script>
 <template>
     <div class="pb-32">
-        <h2 class="text-4xl text-center mb-2">New Position</h2>
-        <LoadingSpinner v-if="!initialized" />
+        <h2 class="text-4xl text-center mb-2">Editing Position</h2>
+        <LoadingSpinner v-if="initializing" />
         <form v-else @submit.prevent="submitForm">
             <div class="bg-dark-light10 p-8 py-16 md:max-w-4xl md:mx-auto mx-3 rounded-3xl border border-light-dark20 mt-20 shadow-2xl mb-16" >
                 <h2 class="text-2xl text-center mb-2">Position Details</h2>
@@ -261,7 +281,7 @@
                     <small v-if="v$.skills.$error" class="text-sm mt-1 text-red-400 block">{{ v$.skills.$errors[0].$message }}</small>
                 </label>
             </div>
-            <ButtonPrimary type="submit" class="mx-auto block mt-16" :disabled="isLoading">Let's Prep!</ButtonPrimary>
+            <ButtonPrimary type="submit" class="mx-auto block mt-16" :disabled="isLoading">Save Changes</ButtonPrimary>
             <small v-if="v$.$error" class="text-sm mt-1 text-red-400 block text-center">Correct the errors above and try again</small>
             <small v-if="supabaseError" class="text-sm mt-1 text-red-400 block text-center">Network error: {{ supabaseError }}. <br/>Please try again or refresh.</small>
           </form>

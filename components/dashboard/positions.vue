@@ -9,7 +9,7 @@
     onMounted(async ()=> {
         if(user.value){
             try{
-                let response = await supabase.from('positions').select('*').eq('user_id', user.value.id).eq('is_archived', false)
+                let response = await supabase.from('positions').select('*').eq('user_id', user.value.id).eq('is_archived', false).order('created_at', {ascending: false})
                 positions.value = response.data
                 initializing.value = false
             } catch (er){
