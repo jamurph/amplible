@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="h-full" v-for="prep_type in prep_types" :key="prep_type.id">
+                <div class="h-full">
                     <div class="bg-dark-light10 p-5 rounded-xl shadow-2xl border border-dark-light20 h-full flex flex-col justify-center">
                         <div class="text-2xl text-center font-bold">
                             More Coming Soon!

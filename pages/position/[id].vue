@@ -61,6 +61,7 @@
                 <h2 class="text-3xl">Start New Prep:</h2>
                 <PrepPositionPreptypes :position_id="route.params.id"/>
             </div>
+            <PrepPositionStartedprep :position_id="route.params.id" />
         </div>
     </div>
 </template>
