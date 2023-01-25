@@ -36,7 +36,7 @@
     async function launchPrep(){
         launched.value = true
         try {
-            const result = await useFetch(`/api/behavioral-interview`, {
+            const result = await useFetch(`/api/behavioral-interview/`, {
                 method: 'POST',
                 body: {
                     position: position.value.id
