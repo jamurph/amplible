@@ -12,11 +12,11 @@
 </script>
 
 <template>
-    <div class="container mx-auto p-4">
+    <div class="md:max-w-5xl md:mx-auto mx-3 p-4">
         <LoadingSpinner v-if="pending" />
-        <div v-else-if="error">
+        <ErrorAlert v-else-if="error">
             <p>We ran into an error. Please refresh.</p>
-        </div>
+        </ErrorAlert>
         <template v-else>
             <div v-for="question in data.qaTree">
                  <PrepBehavioralInterviewQuestion :question="question" />

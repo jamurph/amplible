@@ -29,7 +29,7 @@ import { storeToRefs } from 'pinia';
             <LoadingSpinner></LoadingSpinner>
         </template>
         <template v-else-if="errorLoading">
-            <h1>We've encountered an error. Please refresh the page and try again.</h1>
+            <ErrorAlert>We've encountered an error. Please refresh the page and try again.</ErrorAlert>
         </template>
         <template v-else>
             <template v-if="!acknowledged_ai">

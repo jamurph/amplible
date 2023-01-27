@@ -26,7 +26,7 @@
 
 <template>
     
-    <small v-if="error" class="text-sm mt-1 text-red-400 block text-center">{{ error }}. <br/>Please refresh.</small>
+    <ErrorAlert v-if="error">{{ error }}. <br/>Please refresh.</ErrorAlert>
     <LoadingSpinner v-if="initializing"/>
     <div v-else class="mt-8">
         <template v-if="prep_types.length > 0">

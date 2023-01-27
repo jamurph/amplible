@@ -77,7 +77,7 @@
                     <ButtonPrimary v-else @click="launchPrep">Begin Prep <Icon name="fa6-solid:arrow-right"></Icon></ButtonPrimary>
                 </div>
             </div>
-            <small v-if="error" class="text-sm mt-1 text-red-400 block text-center">{{ error }}. <br/>Please refresh.</small>
+            <ErrorAlert v-if="error">{{ error }}. <br/>Please refresh.</ErrorAlert>
         </template>
         <template v-else>
             <LoadingSpinner />
