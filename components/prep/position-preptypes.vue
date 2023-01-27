@@ -32,7 +32,7 @@
         <template v-if="prep_types.length > 0">
             <div class="grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid gap-5 mt-5">
                 <div class="h-full" v-for="prep_type in prep_types" :key="prep_type.id">
-                    <div class="bg-dark-light10 p-5 rounded-xl shadow-2xl border border-secondary h-full flex flex-col">
+                    <div class="bg-dark-light10 p-5 rounded-xl shadow-lg border border-secondary h-full flex flex-col">
                         <div class="text-2xl font-bold">
                             {{ prep_type.name }}
                         </div>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="h-full">
-                    <div class="bg-dark-light10 p-5 rounded-xl shadow-2xl border border-dark-light20 h-full flex flex-col justify-center">
+                    <div class="bg-dark-light10 p-5 rounded-xl shadow-lg border border-dark-light20 h-full flex flex-col justify-center">
                         <div class="text-2xl text-center font-bold">
                             More Coming Soon!
                         </div>

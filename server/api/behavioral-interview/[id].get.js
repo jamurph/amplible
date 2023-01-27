@@ -4,6 +4,7 @@ import { Configuration, OpenAIApi } from 'openai'
 
 
 function buildQuestionPrompt(position){
+    
     let prompt = `I am an expert recruiter being paid a lot of money to find the best candidates. Brainstorm 30 open-ended, high-quality questions to ask the job applicant below in a behavioral interview to evaluate if the job applicant is a good fit for this role. Refrain from asking redundant questions.\n\n`
     //add position info to prompt: title, description, optionally requirements
     prompt+=`POSITION TITLE: """\n${position.title}\n"""\n\nPOSITION DESCRIPTION: """\n${position.description}\n"""\n\n`
@@ -85,15 +86,19 @@ function extractQuestionsFromString(questionString){
 
 export default defineEventHandler(async (event) => {
 
-    
-    //todo CHECK FOR RIGHTS -> always verify is attached to current user.
-
     const prepId = event.context.params.id;
 
-    const privilegedSupabase = await serverSupabaseServiceRole(event)
-    const clientSupabase = await serverSupabaseClient(event)
-    const user = await serverSupabaseUser(event)
-
+    
+    const values = await Promise.all([
+        serverSupabaseServiceRole(event),
+        serverSupabaseClient(event),
+        serverSupabaseUser(event)
+    ])
+    
+    const privilegedSupabase = values[0]
+    const clientSupabase = values[1]
+    const user = values[2]
+    
     let position = null
     let preparation = null
     let behavioral_interview_prep = null

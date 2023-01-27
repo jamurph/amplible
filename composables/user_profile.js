@@ -56,7 +56,7 @@ export const useUserProfileStore = defineStore('user_profile', () => {
     }
     
     //init 
-    onMounted(async () => {
+    onBeforeMount(async () => {
         //get initial values (or create user and set initial values)
         await getUserProfile()
         //watch for changes to state, and update via API

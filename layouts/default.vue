@@ -20,7 +20,7 @@
     })
 
     const user = useSupabaseUser()
-    const isLoggedIn = ref(false)
+    const isLoggedIn = ref(null)
 
     onMounted(() => {
         watchEffect(()=> {
@@ -33,22 +33,22 @@
     <div class="min-h-screen" id="amplible-main">
         <NavNavbar>
             <template #logo><NuxtLink class="mx-5" to="/"><NavLogo /></NuxtLink></template>
-            <template v-if="!isLoggedIn" #desktop>
+            <template v-if="!isLoggedIn && isLoggedIn != null" #desktop>
                 <LinkDefault class="mx-5 p-3" to="/about/pricing">Pricing</LinkDefault>
                 <LinkDefault class="mx-5 p-3" to="/auth/signin">Sign In</LinkDefault>
                 <LinkDefault class="mx-5 p-3 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/auth/signup">Sign Up <Icon name="fa6-solid:arrow-right"></Icon></LinkDefault>
             </template>
-            <template v-if="isLoggedIn" #desktop>
+            <template v-if="isLoggedIn && isLoggedIn != null" #desktop>
                 <LinkDefault class="mx-5 p-3" to="/dashboard">Dashboard</LinkDefault>
                 <LinkDefault class="mx-5 p-3" to="/settings">Settings</LinkDefault>
                 <LinkDefault class="mx-5 p-3" to="/auth/logout">Logout</LinkDefault>
             </template>
-            <template v-if="!isLoggedIn"  #mobile>
+            <template v-if="!isLoggedIn && isLoggedIn != null"  #mobile>
                 <LinkDefault class="w-fit p-5 m-2" to="/about/pricing">Pricing</LinkDefault>
                 <LinkDefault class="w-fit p-5 m-2" to="/auth/signin">Sign In</LinkDefault>
                 <LinkDefault class="w-fit p-5 m-2 border-2 rounded-lg border-secondary hover:border-secondary-light10 transition-all" to="/auth/signup">Sign Up <Icon name="fa6-solid:arrow-right"></Icon></LinkDefault>
             </template>
-            <template v-if="isLoggedIn" #mobile>
+            <template v-if="isLoggedIn && isLoggedIn != null" #mobile>
                 <LinkDefault class="mx-5 p-3" to="/dashboard">Dashboard</LinkDefault>
                 <LinkDefault class="mx-5 p-3" to="/settings">Settings</LinkDefault>
                 <LinkDefault class="mx-5 p-3" to="/auth/logout">Logout</LinkDefault>

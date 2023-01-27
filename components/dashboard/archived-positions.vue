@@ -39,7 +39,7 @@
                 <small v-if="error" class="text-sm mt-1 text-red-400 block text-center">{{ error }}. <br/>Please refresh.</small>
                 <div class="grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid gap-5 mt-5">
                     <div class="h-full" v-for="position in positions" :key="position.id">
-                        <div class="bg-dark-light10 p-5 rounded-xl shadow-2xl border border-dark-light20 h-full flex flex-col">
+                        <div class="bg-dark-light10 p-5 rounded-xl shadow-lg border border-dark-light20 h-full flex flex-col">
                             <div class="text-lg text-light-dark20">
                                 {{ position.title }}
                             </div>
