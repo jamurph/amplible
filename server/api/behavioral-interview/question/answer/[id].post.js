@@ -123,6 +123,7 @@ export default defineEventHandler(async (event) => {
     //TODO charge tokens. :)
 
     return {
+        id: answer_id,
         text: completion
     }
 })

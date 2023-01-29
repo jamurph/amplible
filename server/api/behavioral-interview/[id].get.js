@@ -141,7 +141,7 @@ export default defineEventHandler(async (event) => {
     //If that comes up empty, we'll walk through each step of initialization to see if it has been performed. If not, we form prompt and call OpenAI
 
     const qaTreeResponse = await privilegedSupabase.from('behavioral_interview_question')
-    .select('*, behavioral_interview_question_answer(*, behavioral_interview_question_answer_critique(*)), behavioral_interview_question_advice(*)')
+    .select('*, behavioral_interview_question_answer(id, text, order, behavioral_interview_question_answer_critique(text)), behavioral_interview_question_advice(text)')
     .eq('interview_id', behavioral_interview_prep.id) 
     .order('order', {ascending: true})
     
@@ -265,7 +265,7 @@ export default defineEventHandler(async (event) => {
         //insert questions. Use same select as above to return the same exact object to send to client.
         const questionInsertResult = await privilegedSupabase.from('behavioral_interview_question')
         .insert(questionInsertObjects)
-        .select('*, behavioral_interview_question_answer(*, behavioral_interview_question_answer_critique(*)), behavioral_interview_question_advice(*)')
+        .select('*, behavioral_interview_question_answer(id, text, order, behavioral_interview_question_answer_critique(text)), behavioral_interview_question_advice(text)')
         .order('order', {ascending: true})
 
         if(questionInsertResult.error){
