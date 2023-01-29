@@ -274,9 +274,9 @@ export default defineEventHandler(async (event) => {
 
 
         const newTree = questionInsertResult.data
-        return {qaTree: newTree}
+        return {qaTree: newTree, position: position}
     } else {
-        return {qaTree: qaTree}
+        return {qaTree: qaTree, position: position}
     }
     
 })
