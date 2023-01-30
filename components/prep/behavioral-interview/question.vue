@@ -13,6 +13,14 @@
     })
 
 
+    /*
+
+    still not always perfectly using "you"
+
+    
+    */
+
+
     const settingSkipped = ref(false)
     const skippingError = ref('')
 
@@ -24,8 +32,6 @@
 
     const tryingAgain = ref(false)
 
-
-    //hmmm...
     const formData = reactive({
         answer: ''
     })
@@ -62,6 +68,8 @@
                     } else {
                         critiqueError.value = ''
                         tryingAgain.value = false
+                        formData.answer = ''
+                        v$.value.$reset()
                         //emit event to parent, so that it can update the qaTree.
                         const critique = result.data.value.text
                         const answer_id = result.data.value.id
@@ -141,7 +149,7 @@
             <div v-if="!props.question.skipped">
                 <hr class="border-dark-light20 mt-3"/>
                 <Transition appear>
-                    <div v-if="props.question.behavioral_interview_question_advice.length > 0" class="advice-bg shadow-2xl mt-3 px-4 py-6  border-t-4 rounded-lg border-secondary text-base">
+                    <div v-if="props.question.behavioral_interview_question_advice.length > 0" class="whitespace-pre-line advice-bg shadow-2xl mt-3 px-4 py-6  border-t-4 rounded-lg border-secondary text-base">
                         <div class="font-bold text-lg mb-3">Answer Advice:</div>
                         {{ props.question.behavioral_interview_question_advice[0].text }}
                     </div>
@@ -150,11 +158,11 @@
                 <small v-if="adviceError" class="text-sm mt-1 text-red-400 block">Error getting AI advice. Please try again or refresh.</small>
                 <TransitionGroup appear tag="div">
                     <div v-for="answer in sortedAnswers" :key="answer.id">
-                        <div class="answer-bg shadow-2xl mt-3 px-4 py-6  border-r-4 rounded-lg border-primary text-base">
+                        <div class="whitespace-pre-line answer-bg shadow-2xl mt-3 px-4 py-6  border-r-4 rounded-lg border-primary text-base">
                             <div class="font-bold text-lg mb-3">Answer:</div>
                             {{ answer.text }}
                         </div>
-                        <div class="critique-bg shadow-2xl mt-3 px-4 py-6  border-l-4 rounded-lg border-secondary text-base">
+                        <div class="whitespace-pre-line critique-bg shadow-2xl mt-3 px-4 py-6  border-l-4 rounded-lg border-secondary text-base">
                             <div class="font-bold text-lg mb-3">Critique:</div>
                             {{ answer.behavioral_interview_question_answer_critique[0].text }}
                         </div>
@@ -171,7 +179,7 @@
                     maxlength="3000"
                     rows="5"
                 ></textarea>
-                <Transition appear><div v-if="gettingCritique && !tryingAgain" class="answer-bg shadow-2xl mt-3 px-4 py-6  border-r-4 rounded-lg border-primary text-base">
+                <Transition appear><div v-if="gettingCritique && !tryingAgain" class="whitespace-pre-line answer-bg shadow-2xl mt-3 px-4 py-6  border-r-4 rounded-lg border-primary text-base">
                     <div class="font-bold text-lg mb-3">Answer:</div>
                         {{ formData.answer }}
                     </div>

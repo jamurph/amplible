@@ -4,36 +4,32 @@ import { Configuration, OpenAIApi } from 'openai'
 
 function buildCritiquePrompt(position,question,answer){
     
-    let prompt = `Provide a critique of the applicant's response to the question asked during a behavioral interview. Give highly detailed feedback on the content, delivery, relevance, appropriateness, clarity, and coherence of the response. Provide suggestions for how the answer could be improved. Describe how a recruiter might feel about their response and what they might be thinking.\n\n`
+    let prompt = `You are an AI that helps humans land their dream jobs. Give insightful, practical feedback to the job applicant about their answer to the behavioral interview question, below. Start by describing to the applicant how the interviewer might feel about the answer. Then, walk through the answer step by step and highlight which aspects are good and which need work. Give highly detailed and specific feedback on the relevance, specificity, clarity, and professionalism of the answer. Lastly, provide advice for how the answer could be improved, incorporating the best information from their objective, education, experience, and skills if that would be helpful. Be professional, encouraging, and insightful to the applicant. Refrain from talking about yourself.\n\n`
     //add position info to prompt: title, description, optionally requirements
-    prompt+=`POSITION TITLE: """\n${position.title}\n"""\n\nPOSITION DESCRIPTION: """\n${position.description}\n"""\n\n`
-
-    if(position.requirements){
-        prompt += `POSITION REQUIREMENTS: """\n${position.requirements}\n"""\n\n`
-    }
-
+    
     //add optional personal details: objective, education, experience, skills
     if(position.objective){
         prompt += `APPLICANT OBJECTIVE: """\n${position.objective}\n"""\n\n`
     }
-
+    
     if(position.education){
         prompt += `APPLICANT EDUCATION: """\n${position.education}\n"""\n\n`
     }
-
+    
     if(position.experience){
         prompt += `APPLICANT EXPERIENCE: """\n${position.experience}\n"""\n\n`
     }
-
+    
     if(position.skills){
         prompt += `APPLICANT SKILLS: """\n${position.skills}\n"""\n\n`
     }
-
+    
+    prompt+=`POSITION TITLE: """\n${position.title}\n"""\n\n`
     prompt += `QUESTION: """\n${question}\n"""\n\n`
-    prompt += `RESPONSE: """\n${answer}\n"""\n\n`
+    prompt += `ANSWER: """\n${answer}\n"""\n\n`
     //finish out the prompt format
 
-    prompt += `RESPONSE CRITIQUE:\n`
+    prompt += `ANSWER FEEDBACK:\n`
 
     return prompt;
 }
@@ -78,10 +74,10 @@ export default defineEventHandler(async (event) => {
         completionResponse = await openAI.createCompletion({
             model: "text-davinci-003",
             prompt: critiquePrompt,
-            temperature: 0.4,
+            temperature: 0,
             max_tokens: 1250,
             top_p: 1,
-            frequency_penalty: 0.05,
+            frequency_penalty: 0.5,
             presence_penalty: 0,
             user: user.id
         });
