@@ -145,7 +145,6 @@
     <div class="mb-16">
         <div class="bg-dark-light10 md:py-6 md:px-10 p-4 rounded-lg text-lg shadow-lg">
             <h4 class="text-xl">{{ props.question.text }}</h4>
-            <Transition appear>
             <div v-if="!props.question.skipped">
                 <hr class="border-dark-light20 mt-3"/>
                 <Transition appear>
@@ -206,7 +205,7 @@
                             maxlength="3000"
                             rows="5"
                             ></textarea>
-                            <div v-if="gettingCritique" class="answer-bg shadow-2xl mt-3 px-4 py-6  border-r-4 rounded-lg border-primary text-base">
+                            <div v-if="gettingCritique" class="whitespace-pre-line break-words answer-bg shadow-2xl mt-3 px-4 py-6  border-r-4 rounded-lg border-primary text-base">
                                 <div class="font-bold text-lg mb-3">Answer:</div>
                                 {{ formData.answer }}
                             </div>
@@ -221,7 +220,6 @@
                 <small v-if="skippingError" class="text-sm mt-1 text-red-400 block text-center">Error connecting to the server. Please refresh this page.</small>
                 <small v-if="critiqueError" class="text-sm mt-1 text-red-400 block text-center">Error connecting to the server. Please refresh this page.</small>
             </div>
-            </Transition>
         </div>
         <div class="pt-1 text-sm text-light-dark20">
             <div class="sm:pl-16 pt-1 text-sm text-light-dark20 inline-block mb-1 sm:mb-0" v-if="props.question.skipped">
