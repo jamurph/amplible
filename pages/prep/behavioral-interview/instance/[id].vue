@@ -69,7 +69,12 @@
 
     function setAdvice(question_id, advice){
         showNext.value = false
-        qaTree.value.find((q)=> q.id === question_id).behavioral_interview_question_advice.push({text: advice})
+        const question = qaTree.value.find((q)=> q.id === question_id)
+        if(question.behavioral_interview_question_advice.length === 0) {
+            question.behavioral_interview_question_advice.push({text: advice})
+        }else {
+            question.behavioral_interview_question_advice[0] = {text: advice}
+        }
     }
 
     function addAnswer(question_id, answer_id, answer, order, critique){

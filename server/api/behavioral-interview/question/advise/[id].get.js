@@ -1,6 +1,8 @@
 import { serverSupabaseUser, serverSupabaseServiceRole } from "#supabase/server"
 
-import { Configuration, OpenAIApi } from 'openai'
+import  OpenAI  from 'openai'
+import { sendStream } from 'h3'
+import {Readable} from 'stream'
 
 function buildAdvicePrompt(position,question){
     
@@ -35,6 +37,36 @@ function buildAdvicePrompt(position,question){
     return prompt;
 }
 
+/* TODO: need to move this to helper */
+function toNodeStream(openAIStream) {
+    const nodeStream = new Readable({
+      read() {}
+    });
+  
+    // We are assuming here that the iterator will yield objects that include the structured data.
+    // You may need to adapt this based on the exact shape of the data you log from the OpenAI stream.
+    async function writeToStream() {
+      for await (const chunk of openAIStream) {
+        // Here we adapt based on the example you provided.
+        const content = chunk.choices[0]?.delta?.content;
+        if (content) {
+          nodeStream.push(content); // Only push if content is defined
+        }
+      }
+      nodeStream.push(null); // No more data
+    }
+  
+    writeToStream().catch(err => {
+      nodeStream.emit('error', err);
+      nodeStream.push(null); // Ensure we close the stream on error
+    });
+  
+    return nodeStream;
+}
+
+
+
+
 export default defineEventHandler(async (event) => {
 
     
@@ -61,27 +93,36 @@ export default defineEventHandler(async (event) => {
     //init OpenAI
     const runtimeConfig = useRuntimeConfig()
     const openAIsecret = runtimeConfig.openAISecret
-    const configuration = new Configuration({
+    const openAI = new OpenAI({
         apiKey: openAIsecret
     })
-    const openAI = new OpenAIApi(configuration)
 
-    let completionResponse = null
-    try {
-        completionResponse = await openAI.createCompletion({
-            model: "text-davinci-003",
-            prompt: advicePrompt,
-            temperature: 0,
-            max_tokens: 1250,
-            top_p: 1,
-            frequency_penalty: 0.5,
-            presence_penalty: 0,
-            user: user.id
-        });
+    const res = await openAI.chat.completions.create({
+        model: "gpt-4-turbo",
+        messages: [{role: "user", content: advicePrompt}],
+        temperature: 0.4,
+        max_tokens: 1250,
+        top_p: 1,
+        frequency_penalty: 0.05,
+        presence_penalty: 0,
+        user: user.id,
+        stream: true
+    },{ responseType: 'stream' });
 
-    } catch (error) {
-        throw new Error("AI Error. Servers may be overloaded. Please wait a moment and refresh.")
-    }
+
+     
+    //experimental.
+    const nodeCompatibleStream = toNodeStream(res);
+
+    return sendStream(event, nodeCompatibleStream)
+    
+
+        
+
+
+    
+    /*
+    TODO: move to a post the client calls.
 
     //trim result, set on local var, save advice to DB
     let completion = completionResponse.data.choices[0].text
@@ -102,4 +143,5 @@ export default defineEventHandler(async (event) => {
     return {
         text: completion
     }
+    */
 })

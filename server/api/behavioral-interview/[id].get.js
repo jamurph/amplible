@@ -1,6 +1,6 @@
 import { serverSupabaseUser, serverSupabaseClient, serverSupabaseServiceRole } from "#supabase/server"
 
-import { Configuration, OpenAIApi } from 'openai'
+import  OpenAI  from 'openai'
 
 
 function buildQuestionPrompt(position){
@@ -157,10 +157,10 @@ export default defineEventHandler(async (event) => {
 
         const runtimeConfig = useRuntimeConfig()
         const openAIsecret = runtimeConfig.openAISecret
-        const configuration = new Configuration({
+        const openAI = new OpenAI({
             apiKey: openAIsecret
         })
-        const openAI = new OpenAIApi(configuration)
+       
 
 
 
@@ -172,9 +172,9 @@ export default defineEventHandler(async (event) => {
             //openAI uses Axios instead of fetch, so handle slightly differently
             let completionResponse = null
             try {
-               completionResponse = await openAI.createCompletion({
-                    model: "text-davinci-003",
-                    prompt: prompt,
+               completionResponse = await openAI.chat.completions.create({
+                    model: "gpt-4-turbo",
+                    messages: [{role: "user", content: prompt}],
                     temperature: 0.4,
                     max_tokens: 1250,
                     top_p: 1,
@@ -184,13 +184,16 @@ export default defineEventHandler(async (event) => {
                 });
 
             } catch (error){
+                console.log(error)
                 throw new Error("AI Error. Servers may be overloaded. Please wait a moment and refresh.")
             }
 
             //trim result, append the prefix "1. ", set on local var, save progress to DB.
-            let completion = completionResponse.data.choices[0].text
+            console.log(completionResponse.choices[0])
+            console.log(completionResponse.choices[0].message)
+            let completion = completionResponse.choices[0].message.content
             completion = completion.trim()
-            completion = '1. ' + completion
+            
             
             behavioral_interview_prep.initial_questions_output = completion
             behavioral_interview_prep.initial_questions_prompt = prompt
@@ -214,9 +217,9 @@ export default defineEventHandler(async (event) => {
             //openAI uses Axios instead of fetch, so handle slightly differently
             let completionResponse = null
             try {
-               completionResponse = await openAI.createCompletion({
-                    model: "text-davinci-003",
-                    prompt: prompt,
+                completionResponse = await openAI.chat.completions.create({
+                    model: "gpt-4-turbo",
+                    messages: [{role: "user", content: prompt}],
                     temperature: 0.4,
                     max_tokens: 1250,
                     top_p: 1,
@@ -230,9 +233,8 @@ export default defineEventHandler(async (event) => {
             }
 
             //trim result, append the prefix "1. ", set on local var, save progress to DB.
-            let completion = completionResponse.data.choices[0].text
+            let completion = completionResponse.choices[0].message.content
             completion = completion.trim()
-            completion = '1. ' + completion
             
             behavioral_interview_prep.improved_questions_output = completion
             behavioral_interview_prep.improved_questions_prompt = prompt

@@ -1,6 +1,6 @@
 import { serverSupabaseUser, serverSupabaseServiceRole } from "#supabase/server"
 
-import { Configuration, OpenAIApi } from 'openai'
+import  OpenAI  from 'openai'
 
 function buildCritiquePrompt(position,question,answer){
     
@@ -63,31 +63,32 @@ export default defineEventHandler(async (event) => {
 
     //init OpenAI
     const runtimeConfig = useRuntimeConfig()
-    const openAIsecret = runtimeConfig.openAISecret
-    const configuration = new Configuration({
-        apiKey: openAIsecret
-    })
-    const openAI = new OpenAIApi(configuration)
+        const openAIsecret = runtimeConfig.openAISecret
+        const openAI = new OpenAI({
+            apiKey: openAIsecret
+        })
 
     let completionResponse = null
     try {
-        completionResponse = await openAI.createCompletion({
-            model: "text-davinci-003",
-            prompt: critiquePrompt,
-            temperature: 0,
+        completionResponse = await openAI.chat.completions.create({
+            model: "gpt-4-turbo",
+            messages: [{role: "user", content: critiquePrompt}],
+            temperature: 0.4,
             max_tokens: 1250,
             top_p: 1,
-            frequency_penalty: 0.5,
+            frequency_penalty: 0.05,
             presence_penalty: 0,
             user: user.id
         });
+        
 
     } catch (error) {
+        console.log(error)
         throw new Error("AI Error. Servers may be overloaded. Please wait a moment and refresh.")
     }
 
     //trim result, set on local var, save answer to DB
-    let completion = completionResponse.data.choices[0].text
+    let completion = completionResponse.choices[0].message.content
     completion = completion.trim()
 
     //insert new answer and new critique record.
